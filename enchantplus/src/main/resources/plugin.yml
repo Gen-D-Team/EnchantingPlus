@@ -1,0 +1,4 @@
+name: enchantplus
+main: com.enchantingplus.Plugin
+version: devbuild-0.1
+api-version: 1.15
