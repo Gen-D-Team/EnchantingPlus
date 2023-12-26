@@ -1,6 +1,8 @@
 package com.enchantingplus;
 
 import java.util.logging.Logger;
+
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /*
@@ -14,15 +16,18 @@ public class Plugin extends JavaPlugin
 
   public void onEnable()
   {
-    LOGGER.info("enchantplus-devbuild-0.1 enabled");
+    LOGGER.info("enchantplus-devbuild-0.2 enabled");
     enchant = new Enchanting();
     lore = new Lore();
     getCommand("enct").setExecutor(enchant);
-    getCommand("enct setlore").setExecutor(lore);
+    getCommand("setlore").setExecutor(lore);
+    getCommand("addlore").setExecutor(lore);
+    getCommand("rename").setExecutor(lore);
+    
   }
 
   public void onDisable()
   {
-    LOGGER.info("enchantplus-devbuild-0.1 disabled");
+    LOGGER.info("enchantplus-devbuild-0.2 disabled");
   }
 }

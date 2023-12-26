@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class Lore implements CommandExecutor{
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player)sender;
-        String loreItem = args[0];
+        // String loreItem = args[0];
         if (!(sender instanceof Player)) {
             return false;
         }

@@ -7,7 +7,7 @@
 
 	<groupId>com.enchantingplus</groupId>
 	<artifactId>enchantplus</artifactId>
-	<version>devbuild-0.1</version>
+	<version>devbuild-0.2</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

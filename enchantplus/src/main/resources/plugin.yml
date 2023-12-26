@@ -1,8 +1,13 @@
 name: enchantplus
 main: com.enchantingplus.Plugin
-version: devbuild-0.1
+version: devbuild-0.2
 api-version: 1.16
 commands:
   enct:
-    description: enchant item or add lore
-    aliases: setlore
+    description: enchant item
+  setlore:
+    description: set lore for item
+  rename:
+    description: rename item
+  addlore:
+    description: add lore and insert
