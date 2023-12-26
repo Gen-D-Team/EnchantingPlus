@@ -9,14 +9,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Plugin extends JavaPlugin
 {
   private static final Logger LOGGER=Logger.getLogger("enchantplus");
+  private Enchanting enchant;
+  private Lore lore;
 
   public void onEnable()
   {
-    LOGGER.info("enchantplus enabled");
+    LOGGER.info("enchantplus-devbuild-0.1 enabled");
+    enchant = new Enchanting();
+    lore = new Lore();
+    getCommand("enct").setExecutor(enchant);
+    getCommand("enct setlore").setExecutor(lore);
   }
 
   public void onDisable()
   {
-    LOGGER.info("enchantplus disabled");
+    LOGGER.info("enchantplus-devbuild-0.1 disabled");
   }
 }
