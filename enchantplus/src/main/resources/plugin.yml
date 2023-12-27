@@ -7,7 +7,3 @@ commands:
     description: enchant item
   setlore:
     description: set lore for item
-  rename:
-    description: rename item
-  addlore:
-    description: add lore and insert
