@@ -1,5 +1,8 @@
 package com.enchantingplus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,6 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import net.md_5.bungee.api.ChatColor;
 
 // This will handle all of the commands in the plugin
@@ -16,12 +21,12 @@ public class Enchanting implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        int level;
         Player player = (Player) sender;
-        String enchantmentName = args[0];
+        
         // Call "enct" as a command
         if (command.getName().equalsIgnoreCase("enct")) {
+            int level;
+            String enchantmentName = args[0];
 
             // Check if user is a player or not
             if (!(sender instanceof Player)) {
@@ -86,6 +91,64 @@ public class Enchanting implements CommandExecutor {
 
             player.sendMessage(ChatColor.GREEN + "Item Enchanted Successfully!");
         }
-        return true;
+
+        // Remove Enchant
+        if (command.getName().equalsIgnoreCase("delenct")) {
+            String enchantmentName = args[0];
+
+            if (args.length < 1) {
+                player.sendMessage(ChatColor.RED + "Usage: /delenct <enchantment>");
+                return true;
+            }
+
+            NamespacedKey key = NamespacedKey.minecraft(enchantmentName);
+
+            Enchantment enchantment = Enchantment.getByKey(key);
+
+            ItemStack mainhand = player.getInventory().getItemInMainHand();
+            mainhand.removeEnchantment(enchantment);
+            player.sendMessage(ChatColor.GREEN + "Remove Enchant Successfully");
+
+            return true;
+        }
+
+        
+        if (command.getName().equalsIgnoreCase("setlore")) {
+            String context = args[0];
+
+            if (args.length < 1) {
+                
+            return true;
+            }
+            ItemStack item = player.getInventory().getItemInMainHand();
+
+            ItemMeta meta = item.getItemMeta();
+
+            List<String> lore = new ArrayList<>();
+
+            lore.add(context);
+            
+            item.setItemMeta(meta);
+
+            return true;
+        }
+
+        if (command.getName().equalsIgnoreCase("rename")) {
+            ItemStack item = player.getInventory().getItemInMainHand();
+
+            ItemMeta meta = item.getItemMeta();
+
+            // Add name
+            String context = args[0];
+
+            if (context.length() < 1) {
+                player.sendMessage(ChatColor.RED + "Usage: /rename <name>");
+            }
+
+            meta.setDisplayName(context);
+            item.setItemMeta(meta);
+        }
+
+        return false;
     }
 }
