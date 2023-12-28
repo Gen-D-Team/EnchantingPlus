@@ -14,29 +14,14 @@ public class Lore implements CommandExecutor{
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player)sender;
-        
+
         if (!(sender instanceof Player)) {
-            return false;
+            player.sendMessage("Only Player Could Use This Command");
+            return true;
         }
 
         if (command.getName().equalsIgnoreCase("setlore")) {
             ItemStack item = player.getInventory().getItemInMainHand();
-
-            if (item == null) {
-                player.sendMessage("You aren't holding an item");
-                return true;
-            }
-
-            ItemMeta meta = item.getItemMeta();
-
-            String loreline = args[0];
-
-            lore.add(loreline);
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-
-            player.sendMessage("Lore added successfully to item");
-
             return true;
         }
         return true;
