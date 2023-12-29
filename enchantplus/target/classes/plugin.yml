@@ -1,0 +1,15 @@
+name: enchantplus
+main: com.enchantingplus.Plugin
+version: devbuild-0.2
+api-version: 1.16
+commands:
+  enct:
+    description: enchant item
+  setlore:
+    description: set lore for item
+  delore:
+    description: delore for item
+  delenct:
+    description: remove enchant
+  rename:
+    description: rename item
