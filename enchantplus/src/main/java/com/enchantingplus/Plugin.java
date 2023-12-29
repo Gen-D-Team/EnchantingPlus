@@ -19,6 +19,7 @@ public class Plugin extends JavaPlugin {
     getCommand("setlore").setExecutor(enchant);
     getCommand("delenct").setExecutor(enchant);
     getCommand("rename").setExecutor(enchant);
+    getCommand("delore").setExecutor(enchant);
   }
 
   public void onDisable() {

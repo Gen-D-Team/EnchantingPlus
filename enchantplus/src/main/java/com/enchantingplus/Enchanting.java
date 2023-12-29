@@ -1,6 +1,7 @@
 package com.enchantingplus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.NamespacedKey;
@@ -12,8 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+
 import net.md_5.bungee.api.ChatColor;
 
 // This will handle all of the commands in the plugin
@@ -114,12 +114,14 @@ public class Enchanting implements CommandExecutor {
 
         
         if (command.getName().equalsIgnoreCase("setlore")) {
-            String context = args[0];
 
             if (args.length < 1) {
-                
-            return true;
+                player.sendMessage("usage: /setlore <lore>");
+                return true;
             }
+
+            String context = String.join(" ", args);
+
             ItemStack item = player.getInventory().getItemInMainHand();
 
             ItemMeta meta = item.getItemMeta();
@@ -127,8 +129,35 @@ public class Enchanting implements CommandExecutor {
             List<String> lore = new ArrayList<>();
 
             lore.add(context);
+
+            meta.setLore(lore);
             
             item.setItemMeta(meta);
+
+            return true;
+        }
+
+        if (command.getName().equalsIgnoreCase("delore")) {
+            if (args.length < 1) {
+                player.sendMessage(ChatColor.GREEN + "usage: /delore <lore>");
+                return true;
+            }
+
+            String context = args[0];
+
+            ItemStack item = player.getInventory().getItemInMainHand();
+
+            ItemMeta meta = item.getItemMeta();
+
+            List<String> lore = meta.getLore();
+
+            if (lore != null) {
+                lore.remove(context);
+                meta.setLore(lore);
+                item.setItemMeta(meta);
+            } else {
+                player.sendMessage(ChatColor.RED + "Item does not have any lore");
+            }
 
             return true;
         }

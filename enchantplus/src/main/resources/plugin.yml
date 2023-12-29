@@ -7,6 +7,8 @@ commands:
     description: enchant item
   setlore:
     description: set lore for item
+  delore:
+    description: delore for item
   delenct:
     description: remove enchant
   rename:
