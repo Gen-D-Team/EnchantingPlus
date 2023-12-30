@@ -1,7 +1,6 @@
 package com.enchantingplus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.NamespacedKey;
@@ -13,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-
 import net.md_5.bungee.api.ChatColor;
 
 // This will handle all of the commands in the plugin
@@ -22,7 +20,7 @@ public class Enchanting implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
-        
+
         // Call "enct" as a command
         if (command.getName().equalsIgnoreCase("enct")) {
             int level;
@@ -112,7 +110,6 @@ public class Enchanting implements CommandExecutor {
             return true;
         }
 
-        
         if (command.getName().equalsIgnoreCase("setlore")) {
 
             if (args.length < 1) {
@@ -122,16 +119,18 @@ public class Enchanting implements CommandExecutor {
 
             String context = String.join(" ", args);
 
+            context = context.replace("&", "§");
+
             ItemStack item = player.getInventory().getItemInMainHand();
 
             ItemMeta meta = item.getItemMeta();
 
-            List<String> lore = new ArrayList<>();
+            List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
 
             lore.add(context);
 
             meta.setLore(lore);
-            
+
             item.setItemMeta(meta);
 
             return true;
@@ -139,7 +138,7 @@ public class Enchanting implements CommandExecutor {
 
         if (command.getName().equalsIgnoreCase("delore")) {
             if (args.length < 1) {
-                player.sendMessage(ChatColor.GREEN + "usage: /delore <lore>");
+                player.sendMessage(ChatColor.GREEN + "usage: /delore <line>");
                 return true;
             }
 
@@ -151,12 +150,23 @@ public class Enchanting implements CommandExecutor {
 
             List<String> lore = meta.getLore();
 
-            if (lore != null) {
-                lore.remove(context);
-                meta.setLore(lore);
-                item.setItemMeta(meta);
-            } else {
-                player.sendMessage(ChatColor.RED + "Item does not have any lore");
+            int line;
+
+            try {
+                line = Integer.parseInt(context);
+                if (lore == null) {
+                    player.sendMessage("Item does not have any lore");
+                } else {
+                    for (int i = 0; i < lore.size(); i++) {
+                        if (i == line) {
+                            lore.remove(line);
+                            meta.setLore(lore);
+                            item.setItemMeta(meta);
+                        }
+                    }
+                }
+            } catch (NumberFormatException e) {
+                player.sendMessage(ChatColor.RED + context + "is not a number");
             }
 
             return true;
@@ -170,6 +180,8 @@ public class Enchanting implements CommandExecutor {
             // Add name
             String context = args[0];
 
+            context = context.replace("&", "§");
+
             if (context.length() < 1) {
                 player.sendMessage(ChatColor.RED + "Usage: /rename <name>");
             }
@@ -181,5 +193,4 @@ public class Enchanting implements CommandExecutor {
         return false;
     }
 
-    
 }
