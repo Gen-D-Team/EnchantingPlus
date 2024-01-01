@@ -1,6 +1,6 @@
 name: enchantplus
 main: com.enchantingplus.Plugin
-version: devbuild-0.2
+version: devbuild-0.3
 api-version: 1.16
 commands:
   enct:

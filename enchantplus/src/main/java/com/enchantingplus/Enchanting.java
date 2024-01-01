@@ -1,5 +1,7 @@
 package com.enchantingplus;
 
+import com.enchantingplus.CustomEnchant.CustomeEnchants;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,22 +11,49 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import net.md_5.bungee.api.ChatColor;
 
 // This will handle all of the commands in the plugin
-public class Enchanting implements CommandExecutor {
+public class Enchanting implements CommandExecutor, Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
-
+        
         // Call "enct" as a command
         if (command.getName().equalsIgnoreCase("enct")) {
             int level;
             String enchantmentName = args[0];
+
+            if (args[0].equalsIgnoreCase("help")) {
+                player.sendMessage(ChatColor.GOLD + "/enct <enchantment> <level>");
+                player.sendMessage(ChatColor.GOLD + "/setlore <lore>");
+                player.sendMessage(ChatColor.GOLD + "/delore <line> the first line start with 0");
+                player.sendMessage(ChatColor.GOLD + "/rename <name>");
+                player.sendMessage(ChatColor.GOLD + "/delenct <enchant>");
+            }
+
+            if (args[0].equalsIgnoreCase("telepathy")) {
+                if (!(sender instanceof Player)) return true;
+
+                ItemStack item = player.getInventory().getItemInMainHand();
+                ItemMeta meta = item.getItemMeta();
+                
+                meta.addEnchant(CustomeEnchants.TELEPATHY, 1, true);
+                
+                List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+                lore.add(ChatColor.GRAY + "Telepathy I");
+                meta.setLore(lore);
+
+                item.setItemMeta(meta);
+                player.sendMessage(ChatColor.GREEN + "Added Enchanted Successfully");
+                
+                return true;
+            }
 
             // Check if user is a player or not
             if (!(sender instanceof Player)) {
@@ -33,7 +62,6 @@ public class Enchanting implements CommandExecutor {
 
             // Check if user type in enough
             if (args.length < 2) {
-                player.sendMessage(ChatColor.GOLD + "Usage: /enct <enchantment> <level>");
                 return true;
             }
 
@@ -45,8 +73,8 @@ public class Enchanting implements CommandExecutor {
                 return false;
             }
 
-            // Enchantment level is between 1 and 50
-            if (level < 1 || level > 50) {
+            // Enchantment level is between 1 and 100
+            if (level < 1 || level > 100) {
                 player.sendMessage(ChatColor.RED + "Enchant level must be between 1 and 50");
                 return true;
             }
@@ -113,7 +141,7 @@ public class Enchanting implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("setlore")) {
 
             if (args.length < 1) {
-                player.sendMessage("usage: /setlore <lore>");
+                player.sendMessage(ChatColor.RED + "usage: /setlore <lore>");
                 return true;
             }
 
@@ -138,7 +166,7 @@ public class Enchanting implements CommandExecutor {
 
         if (command.getName().equalsIgnoreCase("delore")) {
             if (args.length < 1) {
-                player.sendMessage(ChatColor.GREEN + "usage: /delore <line>");
+                player.sendMessage(ChatColor.RED + "usage: /delore <line>");
                 return true;
             }
 
@@ -178,7 +206,7 @@ public class Enchanting implements CommandExecutor {
             ItemMeta meta = item.getItemMeta();
 
             // Add name
-            String context = args[0];
+            String context = String.join(" ", args);
 
             context = context.replace("&", "§");
 
@@ -193,4 +221,6 @@ public class Enchanting implements CommandExecutor {
         return false;
     }
 
+    // Event for telepathy enchant
+    
 }
