@@ -74,12 +74,10 @@ public class Plugin extends JavaPlugin implements Listener {
 
     // Hurricane
     @EventHandler
-    public void onAction(PlayerInteractEvent event, Player player) {
+    public void onAction(PlayerInteractEvent event) {
         if (event.getPlayer().getMainHand() == null)
             return;
-        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomeEnchants.HURRICANE));
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomeEnchants.HURRICANE))
             return;
-        
-        player.sendMessage("Hi");
     }
 }
