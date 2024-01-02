@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -45,6 +46,7 @@ public class Plugin extends JavaPlugin implements Listener {
     LOGGER.info("enchantplus-devbuild-0.3 disabled");
   }
 
+  // Telepathy
   @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.getPlayer().getInventory().getItemInMainHand() == null)
@@ -68,5 +70,16 @@ public class Plugin extends JavaPlugin implements Listener {
         if (drops.isEmpty())
             return;
         player.getInventory().addItem(drops.iterator().next());
+    }
+
+    // Hurricane
+    @EventHandler
+    public void onAction(PlayerInteractEvent event, Player player) {
+        if (event.getPlayer().getMainHand() == null)
+            return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomeEnchants.HURRICANE));
+            return;
+        
+        player.sendMessage("Hi");
     }
 }

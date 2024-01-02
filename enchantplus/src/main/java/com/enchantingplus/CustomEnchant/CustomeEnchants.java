@@ -12,9 +12,11 @@ public class CustomeEnchants {
     public static final Enchantment HURRICANE = new EnchantmentWrapper("hurricane", "Hurricane", 1);
 
     public static void register() {
-        boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(TELEPATHY);
-        if (!registered) {
+        boolean telepathy = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(TELEPATHY);
+        boolean hurricane = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(HURRICANE);
+        if (!telepathy && !hurricane) {
             registerEnchantment(TELEPATHY);
+            registerEnchantment(HURRICANE);
         }
     }
 

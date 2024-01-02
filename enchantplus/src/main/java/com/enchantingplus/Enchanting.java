@@ -23,11 +23,14 @@ public class Enchanting implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
-        
+
         // Call "enct" as a command
         if (command.getName().equalsIgnoreCase("enct")) {
             int level;
             String enchantmentName = args[0];
+
+            if (!(sender instanceof Player))
+                return false;
 
             if (args[0].equalsIgnoreCase("help")) {
                 player.sendMessage(ChatColor.GOLD + "/enct <enchantment> <level>");
@@ -38,26 +41,29 @@ public class Enchanting implements CommandExecutor, Listener {
             }
 
             if (args[0].equalsIgnoreCase("telepathy")) {
-                if (!(sender instanceof Player)) return true;
-
                 ItemStack item = player.getInventory().getItemInMainHand();
                 ItemMeta meta = item.getItemMeta();
-                
+
                 meta.addEnchant(CustomeEnchants.TELEPATHY, 1, true);
-                
+
                 List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
                 lore.add(ChatColor.GRAY + "Telepathy I");
                 meta.setLore(lore);
 
                 item.setItemMeta(meta);
-                player.sendMessage(ChatColor.GREEN + "Added Enchanted Successfully");
-                
-                return true;
             }
 
-            // Check if user is a player or not
-            if (!(sender instanceof Player)) {
-                return false;
+            if (args[0].equalsIgnoreCase("hurricane")) {
+                ItemStack item = player.getInventory().getItemInMainHand();
+                ItemMeta meta = item.getItemMeta();
+
+                meta.addEnchant(CustomeEnchants.HURRICANE, 1, true);
+
+                List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+                lore.add(ChatColor.GRAY + "Hurricane I");
+                meta.setLore(lore);
+
+                item.setItemMeta(meta);
             }
 
             // Check if user type in enough
@@ -222,5 +228,5 @@ public class Enchanting implements CommandExecutor, Listener {
     }
 
     // Event for telepathy enchant
-    
+
 }
